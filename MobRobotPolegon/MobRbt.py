@@ -1,22 +1,19 @@
-# -*- coding: utf-8 -*-
+#
 """
 Полегон для исследования поведения мобильных роботов
 
 """
-import math                                   # математические функции
 import numpy as np                            # Для работы с массивами элементов одного типа
 import matplotlib.pyplot as plt               # для визуализации данных
-
 import datetime                               # Классы для работы с датой и временем
-
-import pygame                                 # Управл. графикой, анимацией, звуком 
-pygame.init()                                 # Инициализация настроек PyGame
+import pygame                                 # Управл. графикой, анимацией, звуком
 
 from MobRbt_Setting import Settings           # Параметры настройки полегона и робота
-st = Settings()                               # Загрузка параметров конфигурации 
-
 from MobRbt_Robot import Robot                # Загрузка класса "Робот"
 from MobRbt_DvPrp import DvPrp                # Загрузка класса "Подвижное препятствие"
+
+pygame.init()                                 # Инициализация настроек PyGame
+st = Settings()                               # Загрузка параметров конфигурации
 
 """************** Начальные установки **************************************"""
 
@@ -24,7 +21,7 @@ Xt, Yt = 1100, 700                            # Координаты цели (�
 Rt = 5                                        # радиус маркера цели
 
 Xr, Yr = 100, 100                             # начальные координаты робота
-fir = math.pi/4                               # курсовой угол робота
+fir = np.pi/4                                 # курсовой угол робота
 RB1 = Robot(Xr, Yr, fir, st)                  # Создание робота
 
 # Создание подвижных препятствий
@@ -51,7 +48,7 @@ pygame.display.set_caption("Robot Polegon")
 font = pygame.font.SysFont("Times", 18)       # Шрифт для надписей
 
 clock = pygame.time.Clock()                   # создаёи объект класса Clock -"Timer" 
-                                              # (для задавния частоты смены кадров)
+                                              # (для задавания частоты смены кадров)
 # ГЛАВНЫЙ ЦИКЛ
 keepGoing = True
 start_time = datetime.datetime.now()          # время начала эксперимента
@@ -71,6 +68,7 @@ while keepGoing:                              # *** Главный цикл ****
     """************** Содержание кадра *************************************"""
     
     # Препятствия на полнгоне (неподвижные)
+
     pygame.draw.polygon(screen, st.pr_color, st.pr1)
     pygame.draw.polygon(screen, st.pr_color, st.pr2)
     pygame.draw.polygon(screen, st.pr_color, st.pr3)
@@ -78,21 +76,21 @@ while keepGoing:                              # *** Главный цикл ****
     pygame.draw.polygon(screen, st.pr_color, st.pr5)
     pygame.draw.polygon(screen, st.pr_color, st.pr6)
     pygame.draw.polygon(screen, st.pr_color, st.pr7)
-    pygame.draw.polygon(screen, st.pr_color, st.pr8)    
+    pygame.draw.polygon(screen, st.pr_color, st.pr8)
     pygame.draw.polygon(screen, st.pr_color, st.pr9)
-    pygame.draw.polygon(screen, st.pr_color, st.pr10)       
+    pygame.draw.polygon(screen, st.pr_color, st.pr10)
     pygame.draw.polygon(screen, st.pr_color, st.pr11)
     pygame.draw.polygon(screen, st.pr_color, st.pr12)
-    pygame.draw.polygon(screen, st.pr_color, st.pr13) 
-    pygame.draw.polygon(screen, st.pr_color, st.pr14)       
+    pygame.draw.polygon(screen, st.pr_color, st.pr13)
+    pygame.draw.polygon(screen, st.pr_color, st.pr14)
     pygame.draw.polygon(screen, st.pr_color, st.pr15)
     pygame.draw.polygon(screen, st.pr_color, st.pr16)
-    pygame.draw.polygon(screen, st.pr_color, st.pr17) 
-    pygame.draw.polygon(screen, st.pr_color, st.pr18)       
+    pygame.draw.polygon(screen, st.pr_color, st.pr17)
+    pygame.draw.polygon(screen, st.pr_color, st.pr18)
     pygame.draw.polygon(screen, st.pr_color, st.pr19)
     pygame.draw.polygon(screen, st.pr_color, st.pr20)
-    pygame.draw.polygon(screen, st.pr_color, st.pr21) 
-    pygame.draw.polygon(screen, st.pr_color, st.pr22) 
+    pygame.draw.polygon(screen, st.pr_color, st.pr21)
+    pygame.draw.polygon(screen, st.pr_color, st.pr22)
 
     # Оодвижные препятствия
     prDv1.MovPr(screen)                      
@@ -109,13 +107,13 @@ while keepGoing:                              # *** Главный цикл ****
     # Отображение надписей на полегоне
     txt = font.render("Дальность до цели: " + str(round(RB1.D,1)) + " пкс",  True, BLACK)      
     screen.blit(txt, (10,2))
-    txt = font.render("Пеленг цели: " + str(round(RB1.At/math.pi,2)) + " пи-рад",  True, BLACK) 
+    txt = font.render("Пеленг цели: " + str(round(RB1.At/np.pi,2)) + " пи-рад",  True, BLACK)
     screen.blit(txt, (10,22)) 
     txt = font.render("Скорость робота: " + str(round(RB1.Vr,1)) + " пкс/с",  True, BLACK)     
     screen.blit(txt, (510,2))  
     txt = font.render("Угл.скор. робота: " + str(round(RB1.Wr,2)) + " рад/с",  True, BLACK)     
     screen.blit(txt, (510,22))             
-    txt = font.render("Курс.угол робота: " + str(round(RB1.fi/math.pi,2)) + " пи-рад",  True, BLACK)     
+    txt = font.render("Курс.угол робота: " + str(round(RB1.fi/np.pi,2)) + " пи-рад",  True, BLACK)
     screen.blit(txt, (510,42)) 
     
     now_time = datetime.datetime.now()                                         # текущее время 
@@ -130,7 +128,7 @@ while keepGoing:                              # *** Главный цикл ****
     # Запись протокола эксперимента
     st.PrtklExpr = np.vstack([st.PrtklExpr, 
                              [round(dT,3),           RB1.x_pos,               RB1.y_pos, 
-                              round(RB1.D,1),  round(RB1.At/math.pi,2), round(RB1.fi/math.pi,2),
+                              round(RB1.D,1),  round(RB1.At/np.pi,2), round(RB1.fi/np.pi,2),
                               round(RB1.Vr,1), round(RB1.Wr,2),               RB1.StlknPr]])
     
     clock.tick(st.kps)                        # задание частоты смены кадров 
