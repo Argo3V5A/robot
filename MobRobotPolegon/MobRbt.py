@@ -4,8 +4,7 @@
 
 """
 import numpy as np                            # Для работы с массивами элементов одного типа
-import matplotlib.pyplot as plt
-# для визуализации данных
+import matplotlib.pyplot as plt               # для визуализации данных
 import datetime                               # Классы для работы с датой и временем
 import pygame                                 # Управл. графикой, анимацией, звуком
 import seaborn as sns
