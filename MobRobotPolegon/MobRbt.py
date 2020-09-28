@@ -200,7 +200,3 @@ plt.title(" Угловая скорость робота")
 plt.xlabel("t, [c]")
 plt.ylabel("Wr, [рад/с]")
 plt.show()
-
-
-
-
